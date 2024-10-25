@@ -6,6 +6,8 @@ let weatherDescription = document.querySelector("#weather-description");
 let humidityElement = document.querySelector("#humidity");
 let windElement = document.querySelector("#wind");
 let temperatureElement = document.querySelector("#temperature");
+let weatherEmoji = document.querySelector("weatherEmoji");
+
 
 function formatDate(date) {
   let days = [
@@ -23,6 +25,36 @@ function formatDate(date) {
 
   return `${days[date.getDay()]} ${hours}:${minutes}`;
 }
+function updateDateTime(){
+    let now = new Date();
+    dateTimeDisplay.innerHTML = formatDate (now)
+
+}
+
+function getWeatherEmoji(description) {
+    if (description.includes("clear")) {
+        return "☀️";
+
+    } else if (description.includes("cloud")) {
+        return "☁️";
+
+    } else if (description.includes("rain")) {
+        return "🌨️";
+
+    } else if (description.includes("snow")) {
+        return "❄️";
+
+    } else if (description.includes("storm")) {
+        return "⚡";
+
+    } else if (description.includes("rainbow")) {
+        return "🌈";
+
+    }
+}
+
+
+
 
 function refreshWeather(response) {
   // Get the data from the response
