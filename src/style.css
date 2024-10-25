@@ -44,7 +44,7 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s ease;
+  transition:  0.3s ease;
 }
 
 input[type="submit"]:hover {
@@ -68,6 +68,34 @@ h1 {
   font-size: 32px;
   margin-bottom: 10px;
   color: #2C3E50;
+}
+
+#humidity,
+#wind {
+  color: #666;
+  margin: 5px 0;
+}
+#city-name {
+  font-size: 32px;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+#date-time {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+#weather-description {
+  color: #666;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+#temperature {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0;
 }
 
 main p {
