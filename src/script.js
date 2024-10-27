@@ -64,6 +64,80 @@ function refreshWeather(response) {
   );
 }
 
+function getForecast(city) {
+  let apiKey = "5af0c133bfa709dct64aabc68f1ao404";
+            let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}`;
+            console.log("Fetching forecast from:", apiUrl);
+            
+            axios.get(apiUrl).then(displayForecast);
+        }
+
+        
+        function displayForecast(response) {
+            console.log("Forecast Data:", response.data);
+            
+            let forecastHtml = "";
+            
+            // Process only first 5 days
+            response.data.daily.slice(0, 5).forEach(day => {
+                let maxTemp = Math.round(day.temperature.maximum);
+                let minTemp = Math.round(day.temperature.minimum);
+                let description = day.condition.description.toLowerCase();
+                
+                forecastHtml += `
+                    <div class="forecast-day">
+                        <div class="forecast-day-name">
+                            ${formatDay(day.time)}
+                        </div>
+                        <div class="forecast-emoji">
+                            ${getWeatherEmoji(description, maxTemp)}
+                        </div>
+                        <div class="forecast-temp">
+                            <strong>${maxTemp}°</strong> / ${minTemp}°
+                        </div>
+                    </div>
+                `;
+            });
+            
+            forecastElement.innerHTML = forecastHtml;
+        }
+
+        
+        function searchCity(city) {
+            console.log("Searching for city:", city);
+            
+            let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+            
+            
+            axios.get(weatherUrl)
+                .then(displayWeather)
+                .catch(error => {
+                    console.error("Error fetching weather:", error);
+                    alert("City not found. Please try again.");
+                });
+                
+            getForecast(city);
+        }
+
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            let city = cityInput.value.trim();
+            
+            if (city) {
+                searchCity(city);
+                cityInput.value = "";
+            }
+        }
+
+        
+        form.addEventListener("submit", handleSearch);
+
+        
+        updateDateTime();
+        setInterval(updateDateTime, 60000); 
+        searchCity("Paris"); 
+
 function searchCity(city) {
   let apiKey = "5af0c133bfa709dct64aabc68f1ao404";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
@@ -81,5 +155,5 @@ function handleSearch(event) {
 
 form.addEventListener("submit", handleSearch);
 updateDateTime();
-setInterval(updateDateTime, 60000); // Update time every minute
+setInterval(updateDateTime, 60000); 
 searchCity("Paris");
