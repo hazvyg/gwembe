@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
-    <title> HazvyG  </title>
-    <link rel="stylesheet" href="src/style.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="src/style.css">
+  <title>Weather App</title>
 
-  </head>
+</head>
+
   <body>
     <header>
-      <form  id="search-form">
-        <input type="search" placeholder="Enter a city.." id="city-input" required />
-        <input type="submit" value="Search" />
-      </form>
+        <form id="search-form">
+            <input type="search" placeholder="Enter a city..." id="city-input" required />
+            <input type="submit" value="Search" />
+        </form>
     </header>
+
     <main>
-      
-        <h1 id="city-name">Paris</h1>
-        <p id="date-time"></p>
-        <p id="weather-description"></p>
-        <p id="humidity"></p>
-        <p id="wind"></p>
-        <div id="temperature">-°C</div>
-        <div id= "weather-emoji" style="font-size: 2em;"></div>
-      
+        <div class="weather-app">
+            <h1 id="city-name">Paris</h1>
+            <p id="date-time"></p>
+            <p id="weather-description"></p>
+            <div class="weather-info">
+                <div id="temperature">-°C</div>
+                <div id="weather-emoji"></div>
+            </div>
+            <div class="weather-details">
+                <div class="weather-detail-item" id="humidity"></div>
+                <div class="weather-detail-item" id="wind"></div>
+            </div>
+        </div>
     </main>
 
     <footer>
-      This project was coded by
-      <a href="https://github.com/hazvyg/gwembe" target="_blank"> HazvyG</a>,
-      is
-      <a href="https://github.com/hazvyg" target="_blank"
-        >open-sourced on GitHub</a
-      >
-      and
-      <a href="https://vanilla-appjs.netlify.app/" target="_blank"
-        >hosted on Netlify</a
-      >
+        This project was coded by
+        <a href="https://github.com/hazvyg/gwembe" target="_blank">HazvyG</a>,
+        is
+        <a href="https://github.com/hazvyg" target="_blank">open-sourced on GitHub</a>
+        and
+        <a href="https://vanilla-appjs.netlify.app/" target="_blank">hosted on Netlify</a>
     </footer>
-    <script src="src/script.js"></script>
-  </body>
+
+
+  <script src="src/script.js"></script>
+
+</body>
 </html>

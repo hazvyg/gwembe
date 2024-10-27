@@ -6,8 +6,7 @@ let weatherDescription = document.querySelector("#weather-description");
 let humidityElement = document.querySelector("#humidity");
 let windElement = document.querySelector("#wind");
 let temperatureElement = document.querySelector("#temperature");
-let weatherEmoji = document.querySelector("weatherEmoji");
-
+let weatherEmoji = document.querySelector("#weather-emoji");
 
 function formatDate(date) {
   let days = [
@@ -19,54 +18,50 @@ function formatDate(date) {
     "Friday",
     "Saturday",
   ];
-
   let hours = date.getHours().toString().padStart(2, "0");
   let minutes = date.getMinutes().toString().padStart(2, "0");
-
   return `${days[date.getDay()]} ${hours}:${minutes}`;
 }
-function updateDateTime(){
-    let now = new Date();
-    dateTimeDisplay.innerHTML = formatDate (now)
 
+function updateDateTime() {
+  let now = new Date();
+  dateTimeDisplay.innerHTML = formatDate(now);
 }
 
-function getWeatherEmoji(description) {
-    if (description.includes("clear")) {
-        return "☀️";
-
-    } else if (description.includes("cloud")) {
-        return "☁️";
-
-    } else if (description.includes("rain")) {
-        return "🌨️";
-
-    } else if (description.includes("snow")) {
-        return "❄️";
-
-    } else if (description.includes("storm")) {
-        return "⚡";
-
-    } else if (description.includes("rainbow")) {
-        return "🌈";
-
-    }
+function getWeatherEmoji(description, temp) {
+  if (description.includes("clear")) {
+    return temp > 25 ? "☀️" : "🌞";
+  } else if (description.includes("cloud")) {
+    return temp < 10 ? "☁️❄️" : "☁️";
+  } else if (description.includes("rain")) {
+    return temp < 5 ? "🌨️" : "🌧️";
+  } else if (description.includes("snow")) {
+    return "❄️";
+  } else if (description.includes("storm")) {
+    return "⛈️";
+  } else if (description.includes("mist") || description.includes("fog")) {
+    return "🌫️";
+  } else {
+    return "🌥️";
+  }
 }
-
-
-
 
 function refreshWeather(response) {
-  // Get the data from the response
-  let city = response.data.city; // Adjust this if the API response structure is different
-  let temperature = Math.round(response.data.temperature.current); // Adjust based on actual response structure
-    let humidity = response.data.humidity;
-    let windSpeed = response.data.wind.speed;
-  // Update the DOM elements
+  let city = response.data.city;
+  let temperature = Math.round(response.data.temperature.current);
+  let humidity = response.data.temperature.humidity;
+  let windSpeed = Math.round(response.data.wind.speed);
+  let description = response.data.condition.description;
+
   cityDisplay.innerHTML = city;
-    temperatureElement.innerHTML = `${temperature}°C`; // Assuming temperature is in Celsius
-    humidityElement.innerHTML = `Humidity: ${humidity}%`;
-    windElement.innerHTML = `windSpeed: ${windSpeed} m/s`;
+  temperatureElement.innerHTML = `${temperature}°C`;
+  humidityElement.innerHTML = `Humidity: ${humidity}%`;
+  windElement.innerHTML = `Wind: ${windSpeed} m/s`;
+  weatherDescription.innerHTML = description;
+  weatherEmoji.innerHTML = getWeatherEmoji(
+    description.toLowerCase(),
+    temperature
+  );
 }
 
 function searchCity(city) {
@@ -78,7 +73,6 @@ function searchCity(city) {
 function handleSearch(event) {
   event.preventDefault();
   let city = cityInput.value.trim();
-
   if (city) {
     searchCity(city);
     cityInput.value = "";
@@ -88,4 +82,4 @@ function handleSearch(event) {
 form.addEventListener("submit", handleSearch);
 updateDateTime();
 setInterval(updateDateTime, 60000); // Update time every minute
-searchCity("default city"); // Load default city, replace "default city" with a specific city name if needed
+searchCity("Paris");
